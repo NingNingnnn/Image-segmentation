@@ -142,8 +142,8 @@ class MyData(data.Dataset):
         for i, name in enumerate(file_names):
             if not name.endswith('.png'):
                 continue
-            self.img_names.append(img_root + '/' + name[:-4] + '.png')
-            self.gt_names.append(gt_root + '/' + name[:-4] + '.png')
+            self.img_names.append(img_root + '\\' + name[:-4] + '.png')
+            self.gt_names.append(gt_root + '\\' + name[:-4] + '.png')
             self.names.append(name[:-4])
 
     def __len__(self):
