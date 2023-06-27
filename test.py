@@ -12,6 +12,8 @@ import time
 from PIL import Image
 
 
+
+
 home = os.path.expanduser("~")
 
 parser = argparse.ArgumentParser()
@@ -22,6 +24,7 @@ parser.add_argument('--b', type=int, default=1)  # batch size
 parser.add_argument('--q', default='densenet121')  # save checkpoint parameters
 opt = parser.parse_args()
 print(opt)
+
 
 
 def main():
