@@ -7,7 +7,7 @@ jpg_files = [f for f in os.listdir(r"D:\images") if f.endswith(".jpg")]
 # 遍历所有jpg图片
 for jpg_file in jpg_files:
     # 读取图片文件
-    img = Image.open(os.path.join(r"D:\images", jpg_file))
+    img = Image.open(os.path.join(r"", jpg_file))
     # 转换成RGB格式
     img_rgb = img.convert("RGB")
     # 获取图片文件名（不含扩展名）

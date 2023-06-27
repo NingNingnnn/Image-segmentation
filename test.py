@@ -15,9 +15,9 @@ from PIL import Image
 home = os.path.expanduser("~")
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--input_dir', default=r'D:\projects\github\source\images\data\test')  # test dataset
-parser.add_argument('--output_dir', default=r'D:\projects\github\source\test')  # test dataset
-parser.add_argument('--para_dir', default=r'D:\projects\github\source\parameters')  # parameters
+parser.add_argument('--input_dir', default='input')  # test dataset
+parser.add_argument('--output_dir', default='mask')  # test dataset
+parser.add_argument('--para_dir', default='parameters')  # parameters
 parser.add_argument('--b', type=int, default=1)  # batch size
 parser.add_argument('--q', default='densenet121')  # save checkpoint parameters
 opt = parser.parse_args()
@@ -32,14 +32,14 @@ def main():
     feature = getattr(densenet, opt.q)(pretrained=False)
     feature.cuda()
     feature.eval()
-    sb = torch.load(r'D:\projects\github\source\parameters_densenet121\feature_model.pth')
+    sb = torch.load(r'parameters_densenet121\feature_model.pth')
 
     feature.load_state_dict(sb)
 
     deconv = Deconv(opt.q)
     deconv.cuda()
     deconv.eval()
-    sb = torch.load(r'D:\projects\github\source\parameters_densenet121\deconv_model.pth')
+    sb = torch.load(r'parameters_densenet121\deconv_model.pth')
 
     deconv.load_state_dict(sb)
     test_loader = torch.utils.data.DataLoader(MyTestData(opt.input_dir), batch_size=bsize, shuffle=False, num_workers=1, pin_memory=True)
@@ -58,7 +58,7 @@ def main():
             msk = (msk * 255).astype(np.uint8)
             msk = Image.fromarray(msk)
             msk = msk.resize((img_size[0][i], img_size[1][i]))
-            msk.save('%s\\%s_pred.png' % (opt.output_dir, img_name[i]), 'PNG')
+            msk.save('%s\\%s.png' % (opt.output_dir, img_name[i]), 'PNG')
 
         # 显示进度
         step_now = id + 1

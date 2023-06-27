@@ -215,7 +215,7 @@ class MyTestData(data.Dataset):
         self.root = root
         self._transform = transform
 
-        img_root = os.path.join(self.root, 'img')
+        img_root = os.path.join(self.root)
         file_names = os.listdir(img_root)
         self.img_names = []
         self.names = []
