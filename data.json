@@ -1,3 +1,5 @@
 {
-    "scale": 200
+    "scale": 200,
+    "color": "none",
+    "back": "false"
 }
