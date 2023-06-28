@@ -10,13 +10,13 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--train_dir', default='./resources/images/data/train/')  # training dataset
-parser.add_argument('--val_dir', default='./resources/images/data/test/')  # test dataset
-parser.add_argument('--check_dir', default='./parameters')  # save checkpoint parameters
+parser.add_argument('--train_dir', default=r'D:\projects\github\source\images\data\train')  # training dataset
+parser.add_argument('--val_dir', default=r'D:\projects\github\source\images\data\test')  # test dataset
+parser.add_argument('--check_dir', default=r'D:\projects\github\source\parameters')  # save checkpoint parameters
 parser.add_argument('--q', default='densenet121')  # save checkpoint parameters
-parser.add_argument('--b', type=int, default=4)  # batch size
-parser.add_argument('--e', type=int, default=100)  # epoches
-parser.add_argument('--svae_interval', type=int, default=5)  # svae interval
+parser.add_argument('--b', type=int, default=12)  # batch size
+parser.add_argument('--e', type=int, default=20)  # epoches
+parser.add_argument('--svae_interval', type=int, default=1)  # svae interval
 opt = parser.parse_args()
 
 
@@ -60,8 +60,8 @@ def main():
                                              batch_size=bsize, shuffle=False, num_workers=1, pin_memory=True)
 
     optimizer = torch.optim.AdamW([
-        {'params': feature.parameters(), 'lr': 1e-3},
-        {'params': deconv.parameters(), 'lr': 1e-3},
+        {'params': feature.parameters(), 'lr': 8e-5},
+        {'params': deconv.parameters(), 'lr': 9e-5},
     ])
 
     min_loss = 10000.0
