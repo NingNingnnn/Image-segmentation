@@ -11,30 +11,47 @@ import cv2
 class MySynData(data.Dataset):
     """
     synthesis data
+    这是一个自定义的数据集类，用于生成合成的图像和掩码
     """
-    mean = np.array([0.485, 0.456, 0.406])
-    std = np.array([0.229, 0.224, 0.225])
+    mean = np.array([0.485, 0.456, 0.406])# 定义图像的均值
+    std = np.array([0.229, 0.224, 0.225])# 定义图像的标准差
 
     def __init__(self, obj_root, bg_root, transform=True, hflip=False, vflip=False, crop=False):
+        """
+        初始化数据集类的属性
+        obj_root: 对象图片的根目录
+        bg_root: 背景图片的根目录
+        transform: 是否对图像进行转换
+        hflip: 是否对图像进行水平翻转
+        vflip: 是否对图像进行垂直翻转
+        crop: 是否对图像进行裁剪
+        """        
         super(MySynData, self).__init__()
-        self.obj_root, self.bg_root = obj_root, bg_root
-        self.is_transform = transform
-        self.is_hflip = hflip
-        self.is_vflip = vflip
-        self.is_crop = crop
-        obj_names = os.listdir(obj_root)
-        bg_names = os.listdir(bg_root)
-        self.name_combs = [(obj_name, bg_name) for obj_name in obj_names for bg_name in bg_names]
+        self.obj_root, self.bg_root = obj_root, bg_root# 定义对象和背景的根目录
+        self.is_transform = transform# 是否对图像进行转换
+        self.is_hflip = hflip# 是否对图像进行水平翻转
+        self.is_vflip = vflip# 是否对图像进行垂直翻转
+        self.is_crop = crop# 是否对图像进行裁剪
+        obj_names = os.listdir(obj_root)# 获取对象目录下的所有文件名
+        bg_names = os.listdir(bg_root)# 获取背景目录下的所有文件名
+        self.name_combs = [(obj_name, bg_name) for obj_name in obj_names for bg_name in bg_names]# 生成对象和背景的所有组合
 
     def __len__(self):
-        return len(self.name_combs)
+        """
+        返回数据集的长度，即组合的数量
+        """
+        return len(self.name_combs)# 返回数据集的长度，即组合的数量
 
     def __getitem__(self, index):
-        obj_name, bg_name = self.name_combs[index]
-        obj = Image.open('%s/%s' % (self.obj_root, obj_name))
+        """
+        根据索引返回一个合成的图像和掩码
+        index: 索引值，范围从0到数据集长度减1
+        """
+        obj_name, bg_name = self.name_combs[index]# 根据索引获取对象和背景的文件名
+        obj = Image.open('%s/%s' % (self.obj_root, obj_name))# 打开对象图片
 
-        bg = Image.open('%s/%s' % (self.bg_root, bg_name))
-        sbc, sbr = bg.size
+        bg = Image.open('%s/%s' % (self.bg_root, bg_name))# 打开背景图片
+        sbc, sbr = bg.size# 获取背景图片的宽度和高
         ratio = 400.0 / max(sbr, sbc)
         bg = bg.resize((int(sbc * ratio), int(sbr * ratio)))
         bg = np.array(bg, dtype=np.uint8)
@@ -206,11 +223,17 @@ class MyTestData(data.Dataset):
             - root
                 - images (images here)
                 - masks (ground truth)
+    这是一个自定义的数据集类，用于加载测试用的图像和掩码
     """
     mean = np.array([0.485, 0.456, 0.406])
     std = np.array([0.229, 0.224, 0.225])
 
     def __init__(self, root, transform=True):
+        """
+        初始化数据集类的属性
+        root: 图像和掩码的根目录
+        transform: 是否对图像进行转换
+        """
         super(MyTestData, self).__init__()
         self.root = root
         self._transform = transform
@@ -226,9 +249,16 @@ class MyTestData(data.Dataset):
             self.names.append(name[:-4])
 
     def __len__(self):
+        """
+        返回数据集的长度，即图像文件名列表的长度
+        """
         return len(self.img_names)
 
     def __getitem__(self, index):
+        """
+        根据索引返回一个图像和掩码
+        index: 索引值，范围从0到数据集长度减1
+        """
         # load image
         img_file = self.img_names[index]
         img = Image.open(img_file)
@@ -242,6 +272,10 @@ class MyTestData(data.Dataset):
             return img, self.names[index], img_size
 
     def transform(self, img):
+        """
+        对图像进行转换，包括归一化，减去均值，除以标准差，转置维度，转换为torch张量等操作
+        img: numpy数组类型的图像数据
+        """
         img = img.astype(np.float64) / 255
         img -= self.mean
         img /= self.std

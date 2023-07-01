@@ -17,9 +17,5 @@ for file in os.listdir (folder_path):
         if img.shape [2] != 3:
             # 使用OpenCV的cvtColor函数将图像转换为3通道BGR格式
             img = cv2.cvtColor (img, cv2.COLOR_BGRA2BGR)
-            # 或者使用PIL的convert函数将图像转换为3通道RGB格式
-            # img = Image.open (file_path)
-            # img = img.convert ("RGB")
-            # img = np.array (img)
         # 保存转换后的图像到原路径，覆盖原文件
         cv2.imwrite (file_path, img)
