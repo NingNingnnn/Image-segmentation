@@ -1,18 +1,17 @@
-本项目修改自:  
-[Image-segmentation](https://github.com/NingNingnnn/Image-segmentation)  
-在原先基础上实现了跨平台的CPU推理运行  
-~~但是训练还是需要GPU,所以你可能得安装两个环境~~  
+本项目参考自:  
+[JoveH-H-FCN-DenseNet](https://github.com/JoveH-H/FCN-DenseNet)  
+[Sharpiless-FCN-DenseNet](https://github.com/Sharpiless/FCN-DenseNet)  
+在原先基础上实现了跨平台的GUI并提供了微调模型
+~~(但是本仓库只能在Windows上使用,也不能cpu推理)~~  
+*需要跨平台或者使用cpu推理可以用[FCN_MultiPlatform](https://github.com/InfiniteMoon/FCN_MultiPlatform)*  
 **强烈建议使用conda等虚拟环境进行配置**  
 结构如下:
 ````
 .
 ├── README.md
 ├── __pycache__
-│   ├── dataset.cpython-311.pyc
 │   ├── dataset.cpython-39.pyc
-│   ├── densenet.cpython-311.pyc
 │   ├── densenet.cpython-39.pyc
-│   ├── model.cpython-311.pyc
 │   └── model.cpython-39.pyc
 ├── chuli.py
 ├── chuli2.py
@@ -41,7 +40,14 @@
 │   └── feature_model.pth
 ├── requirements.txt
 ├── run.bat
-├── run.command
+├── sample
+│   ├── WechatIMG91.png
+│   ├── WechatIMG93.png
+│   ├── WechatIMG94.png
+│   ├── WechatIMG95.png
+│   ├── WechatIMG96.png
+│   ├── WechatIMG98.jpeg
+│   └── WechatIMG99.png
 ├── test.py
 ├── tool_dataset2data.py
 ├── tool_img2data.py
@@ -56,16 +62,16 @@
 本项目是简单的基于FCN-Densenet的图像前后景分割项目  
 macOS和Windows都可以运行
 ## 效果演示
-4k3模型黑色背景抠图
-![4k3原图](/sample/WechatIMG98.jpeg "4k3原图")
-![4k3效果](/sample/WechatIMG99.png "4k3效果")
+4k3模型黑色背景抠图  
+![4k3原图](/samples/WechatIMG98.jpeg "4k3原图")
+![4k3效果](/samples/WechatIMG99.png "4k3效果")
 4k4模型黑色背景抠图  
-![4k4原图](/sample/WechatIMG94.png "4k4原图")
-![4k4mask](/sample/WechatIMG93.png "4k4mask")
-![4k4效果](/sample/WechatIMG91.png "4k4效果")  
+![4k4原图](/samples/WechatIMG94.png "4k4原图")
+![4k4mask](/samples/WechatIMG93.png "4k4mask")
+![4k4效果](/samples/WechatIMG91.png "4k4效果")  
 调整scale后  
-![4k4调整mask](/sample/WechatIMG96.png "4k4调整mask")
-![4k4调整效果](/sample/WechatIMG95.png "4k4调整效果")   
+![4k4调整mask](/samples/WechatIMG96.png "4k4调整mask")
+![4k4调整效果](/samples/WechatIMG95.png "4k4调整效果")   
 *调整scale可以改变二值化mask的阈值来改变消去强度*
 
 # 快速开始
